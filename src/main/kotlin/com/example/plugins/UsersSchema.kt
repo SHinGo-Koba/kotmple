@@ -1,4 +1,4 @@
-package com.sample.plugins
+package com.example.plugins
 
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction

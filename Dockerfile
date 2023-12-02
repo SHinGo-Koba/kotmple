@@ -11,7 +11,8 @@ RUN ./gradlew clean build
 
 # Container setup --------
 FROM eclipse-temurin:17-jre
-EXPOSE 8080:8080
+ENV HOST 0.0.0.0
+EXPOSE 8080
 
 # Creating user
 ENV APPLICATION_USER user

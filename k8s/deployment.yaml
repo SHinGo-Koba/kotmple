@@ -16,4 +16,4 @@ spec:
         - image: kotmple:1.0.0
           name: kotmple
           ports:
-            - containerPort: 80
+            - containerPort: 8080

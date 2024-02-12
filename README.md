@@ -40,7 +40,7 @@ kubectl create -f k8s/deployment.yaml
 kubectl create -f k8s/service.yaml
 ```
 
-7. Get local url to access kotmple
+7. Get local url and keep a connection to kotmple
 ```bash
 minikube service kotmple -n kotmple --url
 ```

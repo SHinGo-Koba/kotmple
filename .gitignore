@@ -15,6 +15,7 @@ build
 out
 *.iml
 .vscode
+.sdkmanrc
 
 *.versionsBackup
 *.releaseBackup

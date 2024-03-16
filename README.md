@@ -39,12 +39,12 @@ kubectl apply -f k8s/namespace.yaml
 kubectl ns kotmple
 ```
 
-7Run kubernetes commands to deploy the application
+7. Run kubernetes commands to deploy the application
 ```bash
 kubectl apply -f k8s/
 ```
 
-8Get local url and keep a connection to kotmple
+8. Get local url and keep a connection to kotmple
 ```bash
 minikube service kotmple -n kotmple --url
 ```

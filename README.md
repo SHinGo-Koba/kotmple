@@ -31,16 +31,20 @@ docker build -t kotmple:1.0.0 .
 
 5. Create namespace
 ```bash
-kubectl create -f k8s/namespace.yaml
+kubectl apply -f k8s/namespace.yaml
 ```
 
-6. Run kubernetes commands to deploy the application
+6. Change namespace to 'kotmple'
 ```bash
-kubectl create -f k8s/deployment.yaml
-kubectl create -f k8s/service.yaml
+kubectl ns kotmple
 ```
 
-7. Get local url and keep a connection to kotmple
+7Run kubernetes commands to deploy the application
+```bash
+kubectl apply -f k8s/
+```
+
+8Get local url and keep a connection to kotmple
 ```bash
 minikube service kotmple -n kotmple --url
 ```

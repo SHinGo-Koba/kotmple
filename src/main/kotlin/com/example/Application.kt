@@ -11,8 +11,9 @@ fun main() {
 }
 
 fun Application.module() {
-    configureSecurity()
+    configureAuthentication()
     configureSerialization()
     configureDatabases()
     configureRouting()
+    configureSessions()
 }

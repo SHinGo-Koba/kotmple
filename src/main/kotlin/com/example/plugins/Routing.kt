@@ -8,5 +8,7 @@ fun Application.configureRouting() {
     routing {
         customerRouting()
         orderRouting()
+        OauthRoutes()
+        BaseRoutes()
     }
 }

@@ -7,7 +7,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 
-fun Route.OauthRoutes() {
+fun Route.oauthRoutes() {
     val redirects = mutableMapOf<String, String>() // Define redirects map
 
     authenticate("auth-oauth-google") {

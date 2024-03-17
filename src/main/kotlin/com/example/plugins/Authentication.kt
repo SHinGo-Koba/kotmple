@@ -3,16 +3,10 @@ package com.example.plugins
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
-import io.ktor.server.plugins.contentnegotiation.*
 
 fun Application.configureAuthentication() {
-    install(ContentNegotiation) {
-        json()
-    }
-
     install(Authentication) {
         val httpClient = HttpClient(CIO)
         val redirects = mutableMapOf<String, String>()

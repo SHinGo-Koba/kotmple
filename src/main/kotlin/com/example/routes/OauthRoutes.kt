@@ -21,11 +21,13 @@ fun Route.oauthRoutes() {
             currentPrincipal?.let { principal ->
                 principal.state?.let { state ->
                     call.sessions.set(UserSession(state, principal.accessToken))
-                    redirects[state]?.let { redirect: String -> // Specify type for redirect
-                        call.respondRedirect(redirect, false) // Specify type for respondRedirect
+                    redirects[state]?.let { redirect ->
+                        call.respondRedirect(redirect)
+                        return@get
                     }
                 }
-            } ?: call.respondRedirect("/home", false) // Specify type for respondRedirect
+            }
+            call.respondRedirect("/home")
         }
     }
 }

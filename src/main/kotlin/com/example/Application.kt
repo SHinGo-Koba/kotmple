@@ -6,14 +6,14 @@ import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 
-fun main() {
+fun main(args: Array<String>) {
     DatabaseSingleton.init()
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
+    embeddedServer(Netty, commandLineEnvironment(args))
         .start(wait = true)
 }
 
 fun Application.module() {
-    configureAuthentication()
+    configureAuthentication(environment)
     configureRouting()
     configureSessions()
 }

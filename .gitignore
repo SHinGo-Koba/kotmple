@@ -42,4 +42,4 @@ gradle-user-home
 
 .fleet
 
-src/main/resources/application.local.conf
+local.env

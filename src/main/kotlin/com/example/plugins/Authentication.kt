@@ -6,7 +6,7 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 
-fun Application.configureAuthentication() {
+fun Application.configureAuthentication(env: ApplicationEnvironment) {
     install(Authentication) {
         val httpClient = HttpClient(CIO)
         val redirects = mutableMapOf<String, String>()
@@ -20,8 +20,8 @@ fun Application.configureAuthentication() {
                     authorizeUrl = "https://accounts.google.com/o/oauth2/auth",
                     accessTokenUrl = "https://accounts.google.com/o/oauth2/token",
                     requestMethod = HttpMethod.Post,
-                    clientId = System.getenv("GOOGLE_CLIENT_ID"),
-                    clientSecret = System.getenv("GOOGLE_CLIENT_SECRET"),
+                    clientId = env.config.propertyOrNull("ktor.oauth2.google.clientId")?.getString() ?: System.getenv("GOOGLE_CLIENT_ID"),
+                    clientSecret = env.config.propertyOrNull("ktor.oauth2.google.clientSecret")?.getString() ?: System.getenv("GOOGLE_CLIENT_SECRET"),
                     defaultScopes = listOf("https://www.googleapis.com/auth/userinfo.profile"),
                     extraAuthParameters = listOf("access_type" to "offline"),
                     onStateCreated = { call, state ->

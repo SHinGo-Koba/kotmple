@@ -38,11 +38,12 @@ class CustomersFacadeImpl : CustomersFacade {
         Customers.deleteWhere { Customers.id eq id } > 0
     }
 
-    override suspend fun updateCustomer(id: Int, firstName: String, lastName: String, email: String): Boolean = dbQuery {
-        Customers.update({ Customers.id eq id }) {
-            it[Customers.firstName] = firstName
-            it[Customers.lastName] = lastName
-            it[Customers.email] = email
-        } > 0
-    }
+    override suspend fun updateCustomer(id: Int, firstName: String, lastName: String, email: String): Boolean =
+        dbQuery {
+            Customers.update({ Customers.id eq id }) {
+                it[Customers.firstName] = firstName
+                it[Customers.lastName] = lastName
+                it[Customers.email] = email
+            } > 0
+        }
 }

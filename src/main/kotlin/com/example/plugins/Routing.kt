@@ -12,9 +12,11 @@ fun Application.configureRouting(env: ApplicationEnvironment) {
     }
 
     routing {
-        customerRouting()
-        orderRouting()
-        oauthRoutes()
+        // Endpoints for the base routes
         baseRoutes(env)
+        // Endpoints for the OAuth
+        oauthRoutes()
+        // Endpoints for the customer
+        customerRouting()
     }
 }

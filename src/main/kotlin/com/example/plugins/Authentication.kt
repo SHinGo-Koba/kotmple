@@ -8,6 +8,7 @@ import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.response.*
 
+// See https://ktor.io/docs/oauth.html#oauth-configuration for more information
 fun Application.configureAuthentication(env: ApplicationEnvironment) {
     install(Authentication) {
         val httpClient = HttpClient(CIO)

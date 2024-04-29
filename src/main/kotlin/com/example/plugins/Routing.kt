@@ -6,7 +6,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.routing.*
 
-fun Application.configureRouting() {
+fun Application.configureRouting(env: ApplicationEnvironment) {
     install(ContentNegotiation) {
         json()
     }
@@ -15,6 +15,6 @@ fun Application.configureRouting() {
         customerRouting()
         orderRouting()
         oauthRoutes()
-        baseRoutes()
+        baseRoutes(env)
     }
 }

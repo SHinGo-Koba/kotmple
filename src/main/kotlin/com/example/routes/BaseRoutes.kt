@@ -15,7 +15,7 @@ import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 import io.ktor.client.plugins.contentnegotiation.*
 
-fun Route.baseRoutes() {
+fun Route.baseRoutes(env: ApplicationEnvironment) {
     val httpClient = HttpClient(CIO) {
         install(ContentNegotiation) {
             json()
@@ -23,23 +23,16 @@ fun Route.baseRoutes() {
     }
 
     get("/") {
-        call.respondText("Login")
+        call.respondText("Welcome to Kotmple!")
     }
 
     get("/home") {
-        val userSession: UserSession? = getSession(call)
-        if (userSession != null) {
-            val userInfo: UserInfo = getPersonalGreeting(httpClient, userSession)
-            call.respondText("Hello, ${userInfo.name}! Welcome home!")
-        }
-    }
+        val userSession: UserSession? = getSession(call, env)
 
-    get("/{path}") {
-        val userSession: UserSession? = getSession(call)
-        if (userSession != null) {
-            val userInfo: UserInfo = getPersonalGreeting(httpClient, userSession)
-            call.respondText("Hello, ${userInfo.name}!")
-        }
+        userSession ?: return@get call.respondText { "Login First" }
+
+        val userInfo: UserInfo = getPersonalGreeting(httpClient, userSession)
+        call.respondText("Hello, ${userInfo.name}! Welcome home!")
     }
 }
 
@@ -53,17 +46,18 @@ private suspend fun getPersonalGreeting(
 }.body()
 
 private suspend fun getSession(
-    call: ApplicationCall
+    call: ApplicationCall,
+    env: ApplicationEnvironment
 ): UserSession? {
     val userSession: UserSession? = call.sessions.get()
-    //if there is no session, redirect to login
-    if (userSession == null) {
-        val redirectUrl = URLBuilder("http://0.0.0.0:8080/login").run {
+
+    return userSession ?: run {
+        val host = env.config.propertyOrNull("ktor.deployment.hostURL")?.getString() ?: "http://0.0.0.0"
+        val redirectUrl = URLBuilder("$host:8080/login").run {
             parameters.append("redirectUrl", call.request.uri)
             build()
         }
         call.respondRedirect(redirectUrl)
-        return null
+        null
     }
-    return userSession
 }

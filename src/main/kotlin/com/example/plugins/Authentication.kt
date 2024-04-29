@@ -13,15 +13,20 @@ fun Application.configureAuthentication(env: ApplicationEnvironment) {
 
         oauth("auth-oauth-google") {
             // Configure oauth authentication
-            urlProvider = { env.config.propertyOrNull("ktor.oauth2.google.urlProvider")?.getString() ?: System.getenv("GOOGLE_URL_PROVIDER") }
+            urlProvider = {
+                env.config.propertyOrNull("ktor.oauth2.google.urlProvider")?.getString()
+                    ?: System.getenv("GOOGLE_URL_PROVIDER")
+            }
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
                     name = "google",
                     authorizeUrl = "https://accounts.google.com/o/oauth2/auth",
                     accessTokenUrl = "https://accounts.google.com/o/oauth2/token",
                     requestMethod = HttpMethod.Post,
-                    clientId = env.config.propertyOrNull("ktor.oauth2.google.clientId")?.getString() ?: System.getenv("GOOGLE_CLIENT_ID"),
-                    clientSecret = env.config.propertyOrNull("ktor.oauth2.google.clientSecret")?.getString() ?: System.getenv("GOOGLE_CLIENT_SECRET"),
+                    clientId = env.config.propertyOrNull("ktor.oauth2.google.clientId")?.getString()
+                        ?: System.getenv("GOOGLE_CLIENT_ID"),
+                    clientSecret = env.config.propertyOrNull("ktor.oauth2.google.clientSecret")?.getString()
+                        ?: System.getenv("GOOGLE_CLIENT_SECRET"),
                     defaultScopes = listOf("https://www.googleapis.com/auth/userinfo.profile"),
                     extraAuthParameters = listOf("access_type" to "offline"),
                     onStateCreated = { call, state ->

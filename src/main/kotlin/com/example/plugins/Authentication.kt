@@ -1,10 +1,12 @@
 package com.example.plugins
 
+import com.example.models.LoginSession
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
+import io.ktor.server.response.*
 
 fun Application.configureAuthentication(env: ApplicationEnvironment) {
     install(Authentication) {
@@ -38,6 +40,19 @@ fun Application.configureAuthentication(env: ApplicationEnvironment) {
                 )
             }
             client = httpClient
+        }
+
+        session<LoginSession>("auth-session") {
+            validate { session ->
+                if (session.userID.isNotEmpty() && session.userName.isNotEmpty()) {
+                    session
+                } else {
+                    null
+                }
+            }
+            challenge {
+                call.respondRedirect("/login")
+            }
         }
     }
 }

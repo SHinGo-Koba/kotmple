@@ -14,6 +14,7 @@ fun main(args: Array<String>) {
 
 fun Application.module() {
     configureAuthentication(environment)
+    configureSessions(environment)
+    // Be sure to call configureSessions before configureRouting
     configureRouting(environment)
-    configureSessions()
 }

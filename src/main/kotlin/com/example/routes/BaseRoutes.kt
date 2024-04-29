@@ -1,5 +1,6 @@
 package com.example.routes
 
+import com.example.models.LoginSession
 import com.example.models.UserInfo
 import com.example.models.UserSession
 import io.ktor.client.*
@@ -32,7 +33,13 @@ fun Route.baseRoutes(env: ApplicationEnvironment) {
         userSession ?: return@get call.respondText { "Login First" }
 
         val userInfo: UserInfo = getPersonalGreeting(httpClient, userSession)
+        call.sessions.set(LoginSession(userID = userInfo.id, userName = userInfo.name))
         call.respondText("Hello, ${userInfo.name}! Welcome home!")
+    }
+
+    get("/logout") {
+        call.sessions.clear<LoginSession>()
+        call.respondText("Logged out")
     }
 }
 

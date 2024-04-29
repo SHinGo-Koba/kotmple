@@ -13,7 +13,7 @@ fun Application.configureAuthentication(env: ApplicationEnvironment) {
 
         oauth("auth-oauth-google") {
             // Configure oauth authentication
-            urlProvider = { "http://localhost:8080/callback" }
+            urlProvider = { env.config.propertyOrNull("ktor.oauth2.google.urlProvider")?.getString() ?: System.getenv("GOOGLE_URL_PROVIDER") }
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
                     name = "google",
